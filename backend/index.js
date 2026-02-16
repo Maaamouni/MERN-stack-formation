@@ -1,7 +1,17 @@
-import express from "express"
+import express from "express";
+import dotenv from "dotenv"
+import { connectDB } from "./config/db.js";
+import userRoutes from "./routes/users.route.js";
 
-const app = express()
+dotenv.config();
 
-app.use(express.json())
+const app = express();
+const PORT = process.env.PORT;
+app.use(express.json()); //allow json
 
-app.post('/auth', async (req, res) => {})
+app.use("/api/users", userRoutes)
+
+app.listen(PORT, () => {
+    connectDB();
+    console.log("is UP.")
+}) 
